@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ChatFlow - Chat</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="chat-page">
+
+  <div class="chat-app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+        <div class="brand-small">
+          <div class="brand-icon">💬</div>
+
+          <div>
+            <h1>ChatFlow</h1>
+            <p>Real-time messaging</p>
+          </div>
+        </div>
+
+        <button id="logoutBtn" class="logout-btn">
+          Logout
+        </button>
+      </div>
+
+
+      <!-- Current User -->
+      <div class="current-user">
+        <div class="avatar" id="currentUserAvatar">
+          U
+        </div>
+
+        <div class="current-user-info">
+          <strong id="currentUsername">
+            Loading...
+          </strong>
+
+          <span class="online-status">
+            <span class="status-dot"></span>
+            Online
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Rooms -->
+      <div class="sidebar-section">
+
+        <div class="section-title">
+          <span>Chat Rooms</span>
+
+          <button id="createRoomBtn" class="add-btn">
+            +
+          </button>
+        </div>
+
+        <div id="roomsList" class="rooms-list">
+          <p class="empty-text">
+            Loading rooms...
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Users -->
+      <div class="sidebar-section users-section">
+
+        <div class="section-title">
+          <span>Users</span>
+        </div>
+
+        <div id="usersList" class="users-list">
+          <p class="empty-text">
+            Loading users...
+          </p>
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- Main Chat -->
+    <main class="chat-main">
+
+      <!-- Chat Header -->
+      <header class="chat-header">
+
+        <div class="chat-header-info">
+
+          <div class="chat-avatar" id="chatAvatar">
+            💬
+          </div>
+
+          <div>
+            <h2 id="chatTitle">
+              Welcome to ChatFlow
+            </h2>
+
+            <p id="chatSubtitle">
+              Select a room or user to start chatting
+            </p>
+          </div>
+
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator"></div>
+
+      </header>
+
+
+      <!-- Messages -->
+      <section id="messagesContainer" class="messages-container">
+
+        <div class="welcome-message">
+
+          <div class="welcome-icon">
+            💬
+          </div>
+
+          <h2>Welcome to ChatFlow!</h2>
+
+          <p>
+            Select a chat room or user from the sidebar
+            to start a conversation.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Message Form -->
+      <form id="messageForm" class="message-form">
+
+        <input
+          type="text"
+          id="messageInput"
+          placeholder="Select a room or user first..."
+          autocomplete="off"
+          disabled
+        >
+
+        <button
+          type="submit"
+          id="sendBtn"
+          class="send-btn"
+          disabled
+        >
+          Send
+        </button>
+
+      </form>
+
+    </main>
+
+  </div>
+
+
+  <!-- Create Room Modal -->
+  <div id="roomModal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <h2>Create Chat Room</h2>
+
+        <button id="closeRoomModal" class="close-btn">
+          ×
+        </button>
+
+      </div>
+
+      <form id="createRoomForm">
+
+        <div class="form-group">
+
+          <label for="roomName">
+            Room Name
+          </label>
+
+          <input
+            type="text"
+            id="roomName"
+            placeholder="e.g. Project Team"
+            minlength="2"
+            maxlength="50"
+            required
+          >
+
+        </div>
+
+        <p id="roomMessage" class="form-message"></p>
+
+        <button
+          type="submit"
+          class="primary-btn"
+        >
+          Create Room
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Chat JavaScript -->
+  <script src="/js/script.js"></script>
+
+</body>
+</html>

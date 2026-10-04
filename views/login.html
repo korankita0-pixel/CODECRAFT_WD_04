@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatFlow - Login</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="auth-page">
+
+  <div class="auth-container">
+
+    <div class="auth-card">
+
+      <div class="brand">
+        <div class="brand-icon">💬</div>
+        <h1>ChatFlow</h1>
+        <p>Connect. Chat. Stay in touch.</p>
+      </div>
+
+      <h2>Welcome Back</h2>
+      <p class="auth-subtitle">Login to continue to ChatFlow</p>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="primary-btn">
+          Login
+        </button>
+
+      </form>
+
+      <p id="loginMessage" class="form-message"></p>
+
+      <div class="auth-link">
+        Don't have an account?
+        <a href="/register">Create an account</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginMessage = document.getElementById("loginMessage");
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      loginMessage.textContent = "";
+      loginMessage.className = "form-message";
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email,
+            password
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          loginMessage.textContent = data.message || "Login failed";
+          loginMessage.classList.add("error");
+          return;
+        }
+
+        loginMessage.textContent = "Login successful! Redirecting...";
+        loginMessage.classList.add("success");
+
+        setTimeout(() => {
+          window.location.href = "/chat";
+        }, 700);
+
+      } catch (error) {
+        console.error(error);
+
+        loginMessage.textContent =
+          "Unable to connect to the server.";
+
+        loginMessage.classList.add("error");
+      }
+    });
+  </script>
+
+</body>
+</html>
